@@ -1,0 +1,104 @@
+.home-screen {
+  position: relative;
+  height: 100%;
+  background: url("../assets/standard-quality-control-concept-m.jpg") center
+    no-repeat;
+  background-size: cover;
+}
+
+.home-screen-gradient {
+  width: 100%;
+  z-index: 1;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+.home-screen-logo {
+  position: fixed;
+  left: 0;
+  width: 150px;
+  object-fit: contain;
+  padding-left: 20px;
+}
+
+.home-screen-button {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #ffff;
+  background-color: #e50914;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+}
+
+.home-screen-body {
+  position: absolute;
+  top: 2%;
+  left: 10%;
+  right: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  z-index: 1;
+  color: #ffff;
+  padding: 20px;
+}
+
+.home-screen-body > h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.home-screen-body > h2 {
+  font-size: 1.7rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.lhome-screen-body > h3 {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.home-screen-body > form > input {
+  padding: 9px;
+  outline-width: 0;
+  height: 31px;
+  width: 30%;
+  border: none;
+  max-width: 600px;
+}
+
+.home-screen-body-get-started {
+  padding: 16px 20px;
+  font-size: 1rem;
+  color: #ffff;
+  background-color: #e50914;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .home-screen-body > h1 {
+    font-size: 1.5rem;
+  }
+
+  .home-screen-body > h2 {
+    font-size: 1rem;
+  }
+
+  .home-screen-body-get-started {
+    width: 150px;
+    font-size: 0.9rem;
+  }
+}
