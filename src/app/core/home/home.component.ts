@@ -10,6 +10,7 @@ import { ScrollAnimationDirective } from '../../shared/animations/scroll-animati
 import { AnimatedCardComponent } from '../../shared/components/animated-card.component';
 import { RippleButtonComponent } from '../../shared/components/ripple-button.component';
 import { TypewriterComponent } from '../../shared/components/typewriter.component';
+import { StackedCardsComponent } from '../../features/stacked-cards/stacked-cards.component';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,8 @@ import { TypewriterComponent } from '../../shared/components/typewriter.componen
     ScrollAnimationDirective,
     AnimatedCardComponent,
     TypewriterComponent,
-    RippleButtonComponent
+    RippleButtonComponent,
+    StackedCardsComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
