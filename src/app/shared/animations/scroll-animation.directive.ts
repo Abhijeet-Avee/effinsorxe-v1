@@ -1,14 +1,29 @@
-import { Directive, ElementRef, OnInit } from '@angular/core';
+import { Directive, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
   selector: '[appScrollAnimation]',
   standalone: true
 })
-export class ScrollAnimationDirective implements OnInit {
-  constructor(private element: ElementRef) {}
+export class ScrollAnimationDirective implements OnInit, OnDestroy {
+  private observer: IntersectionObserver | null = null;
+
+  constructor(
+    private element: ElementRef,
+    private renderer: Renderer2,
+    @Inject(PLATFORM_ID) private platformId: object // Inject platform ID to check if we are in the browser
+  ) {}
 
   ngOnInit() {
-    this.setupIntersectionObserver();
+    if (isPlatformBrowser(this.platformId)) { // Run only in browser
+      this.setupIntersectionObserver();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 
   private setupIntersectionObserver() {
@@ -18,15 +33,15 @@ export class ScrollAnimationDirective implements OnInit {
       threshold: 0.1
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
-          observer.unobserve(entry.target);
+          this.renderer.addClass(this.element.nativeElement, 'animate');
+          this.observer?.unobserve(entry.target);
         }
       });
     }, options);
 
-    observer.observe(this.element.nativeElement);
+    this.observer.observe(this.element.nativeElement);
   }
 }
