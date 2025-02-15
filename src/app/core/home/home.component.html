@@ -14,17 +14,20 @@
 </div> -->
 
 <section class="hero">
+  <video autoplay muted loop class="hero-video">
+    <source src="../../../assets/banner-video1.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
   <div class="hero-content container">
     <h1 class="fade-in">
       <app-typewriter
-        text="Transforming Business Through Technology"
+        text="Connecting Talent with Opportunities"
         [speed]="100"
       >
       </app-typewriter>
     </h1>
     <p class="fade-in">
-      Connecting exceptional talent with innovative companies across Europe and
-      the Middle East
+      Empowering Businesses with Cutting-Edge IT Solutions & Talent
     </p>
     <div class="hero-buttons fade-in">
       <app-ripple-button className="btn btn-primary"
@@ -51,6 +54,7 @@
   </div>
 </section>
 
+<!-------------------- SERVICES ---------------------------------->
 <section class="services">
   <div class="container">
     <h2 class="section-title" appScrollAnimation>Our Services</h2>
@@ -85,6 +89,82 @@
         </p>
         <a href="#" class="service-link">Learn More →</a>
       </app-animated-card>
+    </div>
+  </div>
+</section>
+
+<!--------------------- INDUSTRIES -------------------------->
+
+<section class="services">
+  <div class="container">
+    <h2 class="section-title" appScrollAnimation>Industries</h2>
+    <p class="section-subtitle" appScrollAnimation>
+      We understand your industries' language. Every industry has its own rhythm, its own challenges. 
+      With deep expertise across a wide range of sectors, we're fluent in yours.
+    </p>
+    <p class="section-subtitle" appScrollAnimation>Select your industry to see how we deliver targeted recruitment solutions that translate into success for your business.</p>
+
+    <!-- Industry Grid -->
+    <div class="grid grid-7 industry-grid">
+      <!-- Industry Card -->      
+      <div class="industry-card" appScrollAnimation>
+        <img src="../../../assets/images/automotive.svg" alt="Engineering" class="industry-icon" />
+        <h3 class="industry-title">Engineering</h3>
+      </div>
+
+      <div class="industry-card" appScrollAnimation>
+        <img src="../../../assets/images/warehouse.svg" alt="Warehouse" class="industry-icon" />
+        <h3 class="industry-title">Warehouse</h3>
+      </div>
+
+      <div class="industry-card" appScrollAnimation>
+        <img src="../../../assets/images/manufacturing.svg" alt="Manufacturing" class="industry-icon" />
+        <h3 class="industry-title">Manufacturing</h3>
+      </div>
+
+      <div class="industry-card" appScrollAnimation>
+        <img src="../../../assets/images/authorities.svg" alt="Local Authorities" class="industry-icon" />
+        <h3 class="industry-title">Local Authorities</h3>
+      </div>
+
+      <div class="industry-card" appScrollAnimation>
+        <img src="../../../assets/images/facilities.svg" alt="Facilities Management" class="industry-icon" />
+        <h3 class="industry-title">Facilities Management</h3>
+      </div>
+
+      <div class="industry-card" appScrollAnimation>
+        <img src="../../../assets/images/food.svg" alt="Food Production" class="industry-icon" />
+        <h3 class="industry-title">Food Production</h3>
+      </div>
+
+      <div class="industry-card" appScrollAnimation>
+        <img src="../../../assets/images/office.svg" alt="Office & Professional" class="industry-icon" />
+        <h3 class="industry-title">Office & Professional</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!---------- CONTACT US ------------------>
+<section class="services">
+  <div class="contact-card ">
+    <!-- Image Section -->
+    <div class="w-1/2 hidden md:block">
+      <img src="assets/images/contact-us.jpg" alt="Contact Us" class="w-full h-full object-cover" />
+    </div>
+
+    <!-- Contact Content -->
+    <div class="w-full md:w-1/2 p-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-800">CONTACT US</h2>
+      <p class="mt-4 text-gray-600">
+        Ready to work with a recruitment agency that does things better?  
+        Contact HRGO today to discover how our expert staffing solutions can keep your facilities running smoothly.
+      </p>
+
+      <!-- Call to Action Button -->
+      <a href="contact.html" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-medium text-lg shadow-md transition-transform transform hover:-translate-y-1 hover:shadow-lg">
+        Talk to an Expert
+      </a>
     </div>
   </div>
 </section>
