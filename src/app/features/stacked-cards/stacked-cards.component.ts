@@ -1,62 +1,153 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  PLATFORM_ID,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-stacked-cards',
   standalone: true,
   imports: [],
   templateUrl: './stacked-cards.component.html',
-  styleUrl: './stacked-cards.component.scss'
+  styleUrl: './stacked-cards.component.scss',
 })
-export class StackedCardsComponent implements AfterViewInit{
-
-  @ViewChild('stackArea') stackArea!: ElementRef;
-  cards!: NodeListOf<HTMLElement>;
+export class StackedCardsComponent implements AfterViewInit {
+  @ViewChild('stackArea', { static: false }) stackArea!: ElementRef;
+  cards: HTMLElement[] = [];
   isBrowser: boolean;
+  private triggerStart = 0;
+  private triggerEnd = 0;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    private renderer: Renderer2
+  ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngAfterViewInit(): void {
     if (this.isBrowser) {
-      this.cards = this.stackArea.nativeElement.querySelectorAll('.card');
-      this.rotateCards();
+      setTimeout(() => {
+        if (this.stackArea) {
+          const rect = this.stackArea.nativeElement.getBoundingClientRect();
+          this.triggerStart = window.scrollY + rect.top;
+          this.triggerEnd = this.triggerStart + 2.5 * window.innerHeight;
+
+          this.cards = Array.from(
+            this.stackArea.nativeElement.querySelectorAll('.card')
+          ) as HTMLElement[];
+          this.rotateCards();
+        }
+      }, 500);
     }
   }
 
   private rotateCards(): void {
-    if (!this.isBrowser || !this.cards) return;
-
+    console.log('rotating');
     let angle = 0;
     this.cards.forEach((card, index) => {
       if (card.classList.contains('away')) {
-        card.style.transform = `translateY(-120vh) rotate(-48deg)`;
+        // Force reflow to apply CSS properly
+        card.getBoundingClientRect();
+        this.renderer.setStyle(
+          card,
+          'transform',
+          `translateY(-120vh) rotate(-48deg)`
+        );
       } else {
-        card.style.transform = `rotate(${angle}deg)`;
+        this.renderer.setStyle(card, 'transform', `rotate(${angle}deg)`);
         angle -= 10;
-        card.style.zIndex = `${this.cards.length - index}`;
+        this.renderer.setStyle(card, 'zIndex', `${this.cards.length - index}`);
       }
     });
   }
+
+  // @HostListener('window:scroll', [])
+  // onScroll(): void {
+  //   if (!this.isBrowser || !this.stackArea) return;
+
+  //   const scrollY = window.scrollY;
+
+  //   if (scrollY >= this.triggerStart && scrollY <= this.triggerEnd) {
+  //     this.renderer.addClass(this.stackArea.nativeElement, 'fixed');
+  //   } else {
+  //     this.renderer.removeClass(this.stackArea.nativeElement, 'fixed');
+  //   }
+
+  //   const distance = window.innerHeight * 0.5;
+  //   const topVal = this.stackArea.nativeElement.getBoundingClientRect().top;
+  //   console.log('dstance, topVal'+ distance+ ',' + topVal);
+  //   let index = Math.floor(-1 * (topVal / distance + 1));
+
+  //   console.log('scrolling')
+  //   this.cards.forEach((card, i) => {
+  //     console.log('index '+ index);
+  //     console.log('i '+ i);
+  //     if (i <= index) {
+  //       if (!card.classList.contains('away')) {
+  //         this.renderer.addClass(card, 'away');
+  //         this.rotateCards();
+  //       }
+  //     } else {
+  //       if (card.classList.contains('away')) {
+  //         this.renderer.removeClass(card, 'away');
+  //         this.rotateCards();
+  //       }
+  //     }
+  //   });
+  // }
 
   @HostListener('window:scroll', [])
   onScroll(): void {
     if (!this.isBrowser || !this.stackArea) return;
 
-    const distance = window.innerHeight * 0.5;
-    const topVal = this.stackArea.nativeElement.getBoundingClientRect().top;
-    let index = Math.floor(-1 * (topVal / distance + 1));
+    const scrollY = window.scrollY;
+
+    // Fix position only in range
+    if (scrollY >= this.triggerStart && scrollY <= this.triggerEnd) {
+      this.renderer.addClass(this.stackArea.nativeElement, 'fixed');
+      this.renderer.removeClass(this.stackArea.nativeElement, 'relative-transition');
+    } else {
+
+      const rect = this.stackArea.nativeElement.getBoundingClientRect();
+      this.renderer.setStyle(this.stackArea.nativeElement, '--exit-top', `${rect.top}px`);
+
+      console.log('Rect: ' + rect.top);
+      this.renderer.removeClass(this.stackArea.nativeElement, 'fixed');
+      this.renderer.addClass(this.stackArea.nativeElement, 'relative-transition');
+    }
+
+    // Adjust calculations since section is fixed
+    const distance = window.innerHeight * 1;
+    const sectionTop = this.stackArea.nativeElement.offsetTop;
+    const scrollOffset = scrollY - sectionTop;
+
+    console.log(
+      `ScrollY: ${scrollY}, SectionTop: ${sectionTop}, ScrollOffset: ${scrollOffset}, Distance: ${distance}`
+    );
+
+    let index = Math.max(0, Math.floor(scrollOffset / distance)) - 1;
+
+    console.log('Scrolling...', 'Index:', index);
 
     this.cards.forEach((card, i) => {
       if (i <= index) {
-        card.classList.add('away');
+        if (!card.classList.contains('away')) {
+          this.renderer.addClass(card, 'away');
+          this.rotateCards();
+        }
       } else {
-        card.classList.remove('away');
+        if (card.classList.contains('away')) {
+          this.renderer.removeClass(card, 'away');
+          this.rotateCards();
+        }
       }
     });
-
-    this.rotateCards();
   }
-
 }
