@@ -16,6 +16,8 @@ import { AnimatedCardComponent } from '../../shared/components/animated-card.com
 import { RippleButtonComponent } from '../../shared/components/ripple-button.component';
 import { TypewriterComponent } from '../../shared/components/typewriter.component';
 import { StackedCardsComponent } from '../../features/stacked-cards/stacked-cards.component';
+import { NavigateService } from '../../shared/services/navigate.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -42,7 +44,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private scrollService: ScrollService,
+    private route: ActivatedRoute,
     private renderer: Renderer2,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: object // ✅ Inject PLATFORM_ID to check if browser
   ) {}
 
@@ -55,9 +59,14 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         }
       );
     }
+
+    this.route.paramMap.subscribe((params) => {
+      this.scrollToAbout(params.get('sectionId') as string);
+    });
   }
 
   scrollToAbout(sectionId: string): void {
+    console.log(sectionId + ' subscribe');
     if (isPlatformBrowser(this.platformId)) {
       // ✅ Prevent execution on the server
       // -- Home Section
@@ -141,6 +150,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         });
       }
     }
+  }
+
+  navigateTo(controlName: string) {
+    if (controlName === 'contact') this.router.navigate(['/contact']);
   }
 
   ngOnDestroy(): void {

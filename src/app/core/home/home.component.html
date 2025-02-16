@@ -20,20 +20,21 @@
   </video>
   <div class="hero-content container">
     <h1 class="fade-in">
-      <app-typewriter
-        text="Connecting Talent with Opportunities"
-        [speed]="100"
-      >
+      <app-typewriter text="Connecting Talent with Opportunities" [speed]="100">
       </app-typewriter>
     </h1>
     <p class="fade-in">
       Empowering Businesses with Cutting-Edge IT Solutions & Talent
     </p>
     <div class="hero-buttons fade-in">
-      <app-ripple-button className="btn btn-primary"
+      <app-ripple-button
+        className="btn btn-primary"
+        (click)="navigateTo('contact')"
         >Find Talent</app-ripple-button
       >
-      <app-ripple-button className="btn btn-outline"
+      <app-ripple-button
+        className="btn btn-outline"
+        (click)="scrollToAbout('services')"
         >Our Solutions</app-ripple-button
       >
     </div>
@@ -103,46 +104,78 @@
   <div class="container">
     <h2 class="section-title" appScrollAnimation>Industries</h2>
     <p class="section-subtitle" appScrollAnimation>
-      We understand your industries' language. Every industry has its own rhythm, its own challenges. 
-      With deep expertise across a wide range of sectors, we're fluent in yours.
+      We understand your industries' language. Every industry has its own
+      rhythm, its own challenges. With deep expertise across a wide range of
+      sectors, we're fluent in yours.
     </p>
-    <p class="section-subtitle" appScrollAnimation>Select your industry to see how we deliver targeted recruitment solutions that translate into success for your business.</p>
+    <p class="section-subtitle" appScrollAnimation>
+      Select your industry to see how we deliver targeted recruitment solutions
+      that translate into success for your business.
+    </p>
 
     <!-- Industry Grid -->
     <div class="grid grid-7 industry-grid">
-      <!-- Industry Card -->      
+      <!-- Industry Card -->
       <div class="industry-card" appScrollAnimation>
-        <img src="../../../assets/images/automotive.svg" alt="Engineering" class="industry-icon" />
+        <img
+          src="../../../assets/images/automotive.svg"
+          alt="Engineering"
+          class="industry-icon"
+        />
         <h3 class="industry-title">Engineering</h3>
       </div>
 
       <div class="industry-card" appScrollAnimation>
-        <img src="../../../assets/images/warehouse.svg" alt="Warehouse" class="industry-icon" />
+        <img
+          src="../../../assets/images/warehouse.svg"
+          alt="Warehouse"
+          class="industry-icon"
+        />
         <h3 class="industry-title">Warehouse</h3>
       </div>
 
       <div class="industry-card" appScrollAnimation>
-        <img src="../../../assets/images/manufacturing.svg" alt="Manufacturing" class="industry-icon" />
+        <img
+          src="../../../assets/images/manufacturing.svg"
+          alt="Manufacturing"
+          class="industry-icon"
+        />
         <h3 class="industry-title">Manufacturing</h3>
       </div>
 
       <div class="industry-card" appScrollAnimation>
-        <img src="../../../assets/images/authorities.svg" alt="Local Authorities" class="industry-icon" />
+        <img
+          src="../../../assets/images/authorities.svg"
+          alt="Local Authorities"
+          class="industry-icon"
+        />
         <h3 class="industry-title">Local Authorities</h3>
       </div>
 
       <div class="industry-card" appScrollAnimation>
-        <img src="../../../assets/images/facilities.svg" alt="Facilities Management" class="industry-icon" />
+        <img
+          src="../../../assets/images/facilities.svg"
+          alt="Facilities Management"
+          class="industry-icon"
+        />
         <h3 class="industry-title">Facilities Management</h3>
       </div>
 
       <div class="industry-card" appScrollAnimation>
-        <img src="../../../assets/images/food.svg" alt="Food Production" class="industry-icon" />
+        <img
+          src="../../../assets/images/food.svg"
+          alt="Food Production"
+          class="industry-icon"
+        />
         <h3 class="industry-title">Food Production</h3>
       </div>
 
       <div class="industry-card" appScrollAnimation>
-        <img src="../../../assets/images/office.svg" alt="Office & Professional" class="industry-icon" />
+        <img
+          src="../../../assets/images/office.svg"
+          alt="Office & Professional"
+          class="industry-icon"
+        />
         <h3 class="industry-title">Office & Professional</h3>
       </div>
     </div>
@@ -153,19 +186,24 @@
 <section class="contact-section">
   <div class="contact-card">
     <div class="contact-image">
-      <img src="../../../assets/images/talk-to-an-expert.jpg" alt="Professional Team">
+      <img
+        src="../../../assets/images/talk-to-an-expert.jpg"
+        alt="Professional Team"
+      />
     </div>
     <div class="contact-content">
-      <h2>Looking for top-tier technology solutions, staffing, and IT services?</h2>
+      <h2>
+        Looking for top-tier technology solutions, staffing, and IT services?
+      </h2>
       <p>
-        Partner with a team that delivers excellence. <br/>
-        Contact Effinsorxe today to explore how our expert staffing solutions can keep your operations running seamlessly.
+        Partner with a team that delivers excellence. <br />
+        Contact Effinsorxe today to explore how our expert staffing solutions
+        can keep your operations running seamlessly.
       </p>
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" (click)="navigateTo('contact')">
         <span class="button-text">Talk to an Expert</span>
         <span class="button-icon">📞</span>
       </button>
     </div>
   </div>
 </section>
-
