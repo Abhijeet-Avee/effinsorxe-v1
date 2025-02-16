@@ -49,7 +49,7 @@ export class StackedCardsComponent implements AfterViewInit {
   }
 
   private rotateCards(): void {
-    console.log('rotating');
+    // console.log('rotating');
     let angle = 0;
     this.cards.forEach((card, index) => {
       if (card.classList.contains('away')) {
@@ -68,41 +68,6 @@ export class StackedCardsComponent implements AfterViewInit {
     });
   }
 
-  // @HostListener('window:scroll', [])
-  // onScroll(): void {
-  //   if (!this.isBrowser || !this.stackArea) return;
-
-  //   const scrollY = window.scrollY;
-
-  //   if (scrollY >= this.triggerStart && scrollY <= this.triggerEnd) {
-  //     this.renderer.addClass(this.stackArea.nativeElement, 'fixed');
-  //   } else {
-  //     this.renderer.removeClass(this.stackArea.nativeElement, 'fixed');
-  //   }
-
-  //   const distance = window.innerHeight * 0.5;
-  //   const topVal = this.stackArea.nativeElement.getBoundingClientRect().top;
-  //   console.log('dstance, topVal'+ distance+ ',' + topVal);
-  //   let index = Math.floor(-1 * (topVal / distance + 1));
-
-  //   console.log('scrolling')
-  //   this.cards.forEach((card, i) => {
-  //     console.log('index '+ index);
-  //     console.log('i '+ i);
-  //     if (i <= index) {
-  //       if (!card.classList.contains('away')) {
-  //         this.renderer.addClass(card, 'away');
-  //         this.rotateCards();
-  //       }
-  //     } else {
-  //       if (card.classList.contains('away')) {
-  //         this.renderer.removeClass(card, 'away');
-  //         this.rotateCards();
-  //       }
-  //     }
-  //   });
-  // }
-
   @HostListener('window:scroll', [])
   onScroll(): void {
     if (!this.isBrowser || !this.stackArea) return;
@@ -118,7 +83,7 @@ export class StackedCardsComponent implements AfterViewInit {
       const rect = this.stackArea.nativeElement.getBoundingClientRect();
       this.renderer.setStyle(this.stackArea.nativeElement, '--exit-top', `${rect.top}px`);
 
-      console.log('Rect: ' + rect.top);
+      // console.log('Rect: ' + rect.top);
       this.renderer.removeClass(this.stackArea.nativeElement, 'fixed');
       this.renderer.addClass(this.stackArea.nativeElement, 'relative-transition');
     }
@@ -128,13 +93,13 @@ export class StackedCardsComponent implements AfterViewInit {
     const sectionTop = this.stackArea.nativeElement.offsetTop;
     const scrollOffset = scrollY - sectionTop;
 
-    console.log(
-      `ScrollY: ${scrollY}, SectionTop: ${sectionTop}, ScrollOffset: ${scrollOffset}, Distance: ${distance}`
-    );
+    // console.log(
+    //   `ScrollY: ${scrollY}, SectionTop: ${sectionTop}, ScrollOffset: ${scrollOffset}, Distance: ${distance}`
+    // );
 
     let index = Math.max(0, Math.floor(scrollOffset / distance)) - 1;
 
-    console.log('Scrolling...', 'Index:', index);
+    // console.log('Scrolling...', 'Index:', index);
 
     this.cards.forEach((card, i) => {
       if (i <= index) {
