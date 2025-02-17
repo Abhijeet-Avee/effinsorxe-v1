@@ -17,7 +17,7 @@ import { RippleButtonComponent } from '../../shared/components/ripple-button.com
 import { TypewriterComponent } from '../../shared/components/typewriter.component';
 import { StackedCardsComponent } from '../../features/stacked-cards/stacked-cards.component';
 import { NavigateService } from '../../shared/services/navigate.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +29,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     TypewriterComponent,
     RippleButtonComponent,
     StackedCardsComponent,
+    RouterModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -160,5 +161,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     if (this.scrollSubscription) {
       this.scrollSubscription.unsubscribe();
     }
+  }
+
+  navigateToServices(navigateTo:string) {
+    // Navigate to the home page first, and then to the target route
+    this.router.navigate(['/']).then(() => {
+      this.router.navigate([`/services/services/${navigateTo}`]);
+    });
   }
 }

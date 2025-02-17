@@ -1,5 +1,101 @@
-<section class="hero" #formSection>
+<section class="contact-section">
     <div class="container">
-        <h1>This is a form</h1>
+      <div class="contact-content">
+        <div class="contact-info" appScrollAnimation>
+          <h1 class="title">Get in Touch</h1>
+          <p class="subtitle">Let's discuss how we can help your business grow</p>
+          
+          <div class="info-cards">
+            <app-animated-card class="info-card">
+              <div class="info-icon">📍</div>
+              <h3>Our Office</h3>
+              <p>123 Business Avenue<br>London, UK EC2A 4NE</p>
+            </app-animated-card>
+            
+            <app-animated-card class="info-card">
+              <div class="info-icon">📞</div>
+              <h3>Contact</h3>
+              <p>Phone: +44 20 1234 5678<br>Email: infoechstaff.com</p>
+            </app-animated-card>
+            
+            <app-animated-card class="info-card">
+              <div class="info-icon">🌐</div>
+              <h3>Working Hours</h3>
+              <p>Monday - Friday<br>9:00 AM - 6:00 PM GMT</p>
+            </app-animated-card>
+          </div>
+        </div>
+
+        <div class="contact-form-container" appScrollAnimation>
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input 
+                id="name" 
+                type="text" 
+                formControlName="name"
+                [class.error]="isFieldInvalid('name')"
+                placeholder="Enter your full name"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('name')">
+                Please enter your name
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input 
+                id="email" 
+                type="email" 
+                formControlName="email"
+                [class.error]="isFieldInvalid('email')"
+                placeholder="Enter your email address"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('email')">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input 
+                id="subject" 
+                type="text" 
+                formControlName="subject"
+                [class.error]="isFieldInvalid('subject')"
+                placeholder="What is this regarding?"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('subject')">
+                Please enter a subject
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea 
+                id="message" 
+                formControlName="message"
+                [class.error]="isFieldInvalid('message')"
+                placeholder="Your message here..."
+                rows="5"
+              ></textarea>
+              <div class="error-message" *ngIf="isFieldInvalid('message')">
+                Please enter your message
+              </div>
+            </div>
+
+            <app-ripple-button 
+              className="btn btn-primary submit-btn" 
+              [disabled]="contactForm.invalid || isSubmitting"
+            >
+              {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+            </app-ripple-button>
+
+            <div class="success-message" *ngIf="submitSuccess">
+              Thank you for your message! We'll get back to you soon.
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
