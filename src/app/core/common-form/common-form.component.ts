@@ -9,14 +9,29 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ScrollService } from '../../shared/services/scroll.service';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavigateService } from '../../shared/services/navigate.service';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RippleButtonComponent } from '../../shared/components/ripple-button.component';
+import { AnimatedCardComponent } from '../../shared/components/animated-card.component';
+import { ScrollAnimationDirective } from '../../shared/animations/scroll-animation.directive';
 
 @Component({
   selector: 'app-common-form',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ScrollAnimationDirective,
+    RippleButtonComponent,
+    AnimatedCardComponent,
+  ],
   templateUrl: './common-form.component.html',
   styleUrl: './common-form.component.scss',
 })
@@ -24,12 +39,54 @@ export class CommonFormComponent implements AfterViewInit, OnDestroy {
   private scrollSubscription!: Subscription;
   @Output() navigateToEvent = new EventEmitter<string>();
 
+  contactForm: FormGroup;
+  isSubmitting = false;
+  submitSuccess = false;
+
   constructor(
     private scrollService: ScrollService,
     @Inject(PLATFORM_ID) private platformId: object,
     private router: Router,
-    private navigateService: NavigateService
-  ) {}
+    private navigateService: NavigateService,
+    private fb: FormBuilder
+  ) {
+    this.contactForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      subject: ['', Validators.required],
+      message: ['', [Validators.required, Validators.minLength(10)]],
+    });
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.contactForm.get(fieldName);
+    return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+  async onSubmit() {
+    if (this.contactForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      this.submitSuccess = true;
+      this.contactForm.reset();
+      this.isSubmitting = false;
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        this.submitSuccess = false;
+      }, 5000);
+    } else {
+      Object.keys(this.contactForm.controls).forEach((key) => {
+        const control = this.contactForm.get(key);
+        if (control) {
+          control.markAsTouched();
+        }
+      });
+    }
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {

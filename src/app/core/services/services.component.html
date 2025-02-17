@@ -1,0 +1,52 @@
+<section class="service-section">
+    <div class="container">
+      <div class="service-header" appScrollAnimation>
+        <h1 class="title">{{ service.title }}</h1>
+        <p class="subtitle">{{ service.subtitle }}</p>
+      </div>
+
+      <div class="service-content">
+        <div class="service-info" appScrollAnimation>
+          <div class="description">
+            <p>{{ service.description }}</p>
+          </div>
+
+          <div class="features">
+            <h2>Key Features</h2>
+            <ul>
+              <li *ngFor="let feature of service.features">
+                <span class="feature-bullet">•</span>
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
+
+          <app-ripple-button 
+            className="btn btn-primary contact-btn"
+            routerLink="/contact"
+            [queryParams]="{service: service.id}">
+            Get Started
+          </app-ripple-button>
+        </div>
+
+        <div class="service-visual">
+          <app-animated-card class="image-card" appScrollAnimation>
+            <img [src]="service.image" [alt]="service.title" class="service-image">
+          </app-animated-card>
+        </div>
+      </div>
+
+      <div class="benefits-section" appScrollAnimation>
+        <h2>Benefits</h2>
+        <div class="benefits-grid">
+          <app-animated-card 
+            *ngFor="let benefit of service.benefits"
+            class="benefit-card">
+            <div class="benefit-icon">{{ benefit.icon }}</div>
+            <h3>{{ benefit.title }}</h3>
+            <p>{{ benefit.description }}</p>
+          </app-animated-card>
+        </div>
+      </div>
+    </div>
+  </section>

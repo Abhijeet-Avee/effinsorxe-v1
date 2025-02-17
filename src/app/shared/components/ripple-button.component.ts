@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <button 
       [class]="'ripple-button ' + className"
+      [disabled]="disabled"
       (click)="createRipple($event)">
       <ng-content></ng-content>
       <div class="ripple-container"></div>
@@ -23,6 +24,12 @@ import { CommonModule } from '@angular/common';
       cursor: pointer;
       font-weight: 600;
       transition: all 0.3s ease;
+    }
+
+    .ripple-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: rgba(var(--primary-color-rgb), 0.5);
     }
 
     .ripple-container {
@@ -52,10 +59,13 @@ import { CommonModule } from '@angular/common';
 })
 export class RippleButtonComponent {
   @Input() className: string = '';
+  @Input() disabled: boolean = false;
 
   constructor(private el: ElementRef) {}
 
   createRipple(event: MouseEvent) {
+    if (this.disabled) return;
+    
     const button = this.el.nativeElement.querySelector('.ripple-button');
     const rippleContainer = button.querySelector('.ripple-container');
     const circle = document.createElement('span');
