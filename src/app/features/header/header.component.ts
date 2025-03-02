@@ -18,6 +18,9 @@ export class HeaderComponent {
   }
 
   navigateTo(controlName: string) {
-    if (controlName === 'contact') this.router.navigate(['/contact']);
+    if (controlName === 'contact')
+      this.router.navigate(['/contact']).then(() => {
+        window.scrollTo(0, 0); // Scroll to top after navigation
+      });
   }
 }
