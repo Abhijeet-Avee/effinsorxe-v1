@@ -154,7 +154,11 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   navigateTo(controlName: string) {
-    if (controlName === 'contact') this.router.navigate(['/contact']);
+    if (controlName === 'contact') {
+      this.router.navigate(['/contact']).then(() => {
+        window.scrollTo(0, 0); // Scroll to top after navigation
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -163,10 +167,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  navigateToServices(navigateTo:string) {
+  navigateToServices(navigateTo: string) {
     // Navigate to the home page first, and then to the target route
     this.router.navigate(['/']).then(() => {
-      this.router.navigate([`/services/services/${navigateTo}`]);
+      this.router.navigate([`/services/services/${navigateTo}`]).then(() => {
+        window.scrollTo(0, 0); // Scroll to top after navigation
+      });
     });
   }
 }
